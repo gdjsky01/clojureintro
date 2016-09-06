@@ -1,0 +1,8 @@
+(defn mf [& rs]
+(println rs))
+(mf)
+(mf 3 3 :r 56)
+(defn mf [& rs]
+(apply println rs))
+(mf 3 3 :r 56)
+(mf)
