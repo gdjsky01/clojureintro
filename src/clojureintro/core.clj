@@ -50,6 +50,17 @@
            (unload ingredient)))
      (error "This function only works on fridge ingredients. You passed " ingredient))))
 
+(defn fetch-ingregient
+  ([ingredient]
+    (fetch-ingregient ingredient 1))
+  ([ingredient amount]
+   (cond
+     (from-panty? ingredient)
+       (fetch-from-pantry ingredient amount)
+     (from-fridge? ingredient)
+       (fetch-from-fridge ingredient amount))
+   :else
+     (error "Huh?" ingredient)))
 
 (defn add-egg []
   (grab :egg)
@@ -182,6 +193,8 @@
 (defn -main []
 (start-over)
   (fetch-from-pantry :flour 2)
+  (fetch-from-fridge :egg 15)
+  (fetch-ingregient :sugar 2)
   (status))
 
 (-main)
