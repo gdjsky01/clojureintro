@@ -172,44 +172,40 @@
       (println "I do not have the ingredient" ingredient)
       :error))))
 
+
+(defn load-up-amount [ingredient amount]
+  (dotimes [i amount]
+    (load-up ingredient)))
+
+(defn unload-amount [ingredient amount]
+  (dotimes [i amount]
+    (unload ingredient)))
+
+
+
 (defn fetch-list [shopping-list]
   (go-to :pantry)
-  (when (contains? :flour shopping-list)
-    (dotimes [n (get shopping-list :flour)]
-      (load-up :flour)))
-  (when (contains? :sugar shopping-list)
-    (dotimes [n (get shopping-list :sugar)]
-      (load-up :sugar)))
+    (load-up-amount :flour (:flour shopping-list 0))
+
+    (load-up-amount :sugar (:sugar shopping-list 0))
 
   (go-to :fridge)
-  (when (contains? :egg shopping-list)
-    (dotimes [n (get shopping-list :egg)]
-      (load-up :egg)))
-  (when (contains? :milk shopping-list)
-    (dotimes [n (get shopping-list :milk)]
-      (load-up :milk)))
-  (when (contains? :butter shopping-list)
-    (dotimes [n (get shopping-list :butter)]
-      (load-up :butter)))
+    (load-up-amount :egg (:egg shopping-list 0))
+
+    (load-up-amount :milk (:milk shopping-list 0))
+
+    (load-up-amount :butter (:butter shopping-list 0))
 
   (go-to :prep-area)
-  (when (contains? :flour shopping-list)
-    (dotimes [n (get shopping-list :flour)]
-      (unload :flour)))
-  (when (contains? :sugar shopping-list)
-    (dotimes [n (get shopping-list :sugar)]
-      (unload :sugar)))
-  (go-to :fridge)
-  (when (contains? :egg shopping-list)
-    (dotimes [n (get shopping-list :egg)]
-      (unload :egg)))
-  (when (contains? :milk shopping-list)
-    (dotimes [n (get shopping-list :milk)]
-      (lunload :milk)))
-  (when (contains? :butter shopping-list)
-    (dotimes [n (get shopping-list :butter)]
-      (unload :butter))))
+    (unload-amount :flour (:flour shopping-list 0))
 
+    (unload-amount :sugar (:sugar shopping-list 0))
+
+    (unload-amount :egg (:egg shopping-list 0))
+
+    (unload-amount :milk (:milk shopping-list 0))
+
+    (unload-amount :butter (:butter shopping-list 0)))
 
 
 (defn bake-cake []
