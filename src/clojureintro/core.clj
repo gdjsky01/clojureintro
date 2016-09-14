@@ -172,6 +172,46 @@
       (println "I do not have the ingredient" ingredient)
       :error))))
 
+(defn fetch-list [shopping-list]
+  (go-to :pantry)
+  (when (contains? :flour shopping-list)
+    (dotimes [n (get shopping-list :flour)]
+      (load-up :flour)))
+  (when (contains? :sugar shopping-list)
+    (dotimes [n (get shopping-list :sugar)]
+      (load-up :sugar)))
+
+  (go-to :fridge)
+  (when (contains? :egg shopping-list)
+    (dotimes [n (get shopping-list :egg)]
+      (load-up :egg)))
+  (when (contains? :milk shopping-list)
+    (dotimes [n (get shopping-list :milk)]
+      (load-up :milk)))
+  (when (contains? :butter shopping-list)
+    (dotimes [n (get shopping-list :butter)]
+      (load-up :butter)))
+
+  (go-to :prep-area)
+  (when (contains? :flour shopping-list)
+    (dotimes [n (get shopping-list :flour)]
+      (unload :flour)))
+  (when (contains? :sugar shopping-list)
+    (dotimes [n (get shopping-list :sugar)]
+      (unload :sugar)))
+  (go-to :fridge)
+  (when (contains? :egg shopping-list)
+    (dotimes [n (get shopping-list :egg)]
+      (unload :egg)))
+  (when (contains? :milk shopping-list)
+    (dotimes [n (get shopping-list :milk)]
+      (lunload :milk)))
+  (when (contains? :butter shopping-list)
+    (dotimes [n (get shopping-list :butter)]
+      (unload :butter))))
+
+
+
 (defn bake-cake []
   (add :egg 2)
   (add :flour 2)
