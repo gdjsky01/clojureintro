@@ -212,14 +212,23 @@
   (add :butter 1)
   (add :sugar 1))
 
-(def my-shopping-list {:flour 2 :milk 4 :butter 1})
+
+(defn day-at-the-bakery []
+  (doseq [order (get-morning-orders)]
+    ;; get a map of items in the order and look up the cakes count
+    (dotimes [n (:cake (:item order) 0)]
+      (fetch-list {:egg 2 :flour 3 :milk 1 :sugar 1})
+      (delivery {:orderid (:orderid order)
+                 :address (:address order)
+                 :rackids [(bake-cake)]}))
+    (dotimes [n (:cookies (:item order) 0)]
+      (fetch-list {:egg 1 :flour 1 :butter 1 :sugar 1})
+      (delivery {:orderid (:orderid order)
+                 :address (:address order)
+                 :rackids [(bake-cookies)]}))))
 
 (defn -main []
-  (start-over)
-  ; (fetch-from-pantry :flour 2)
-  ; (fetch-from-fridge :egg 15)
-  ; (fetch-ingregient :sugar 2)
-  (fetch-list my-shopping-list)
-  (status))
+  (println get-morning-orders)
+   (day-at-the-bakery))
 
 (-main)
