@@ -1,4 +1,3 @@
-
 (ns clojureintro.core
   (:use bakery.core))
 
@@ -18,8 +17,8 @@
 
 
 (defn error [& rs]
-   (apply println rs)
-   :error)
+  (apply println rs)
+  :error)
 
 (defn fetch-from-pantry
   ([ingredient]
@@ -60,7 +59,7 @@
      (from-fridge? ingredient)
      (fetch-from-fridge ingredient amount))
    :else
-     (error "Huh?" ingredient)))
+   (error "Huh?" ingredient)))
 
 (defn add-egg []
   (grab :egg)
@@ -138,8 +137,8 @@
      (do
        (grab :cup)
        (dotimes [i amount]
-        (scoop ingredient)
-        (add-to-bowl))
+         (scoop ingredient)
+         (add-to-bowl))
        (release))
      (error (str "This function only works on scooped ingredients. You asked me to scoop " ingredient)))))
 
@@ -158,19 +157,19 @@
    (add ingredient 1))
   ([ingredient amount]
    (cond
-    (squeezed? ingredient)
-    (add-squeezed ingredient amount)
+     (squeezed? ingredient)
+     (add-squeezed ingredient amount)
 
-    (simple? ingredient)
-    (add-simple ingredient amount)
+     (simple? ingredient)
+     (add-simple ingredient amount)
 
-    (scooped? ingredient)
-    (add-scooped ingredient amount)
+     (scooped? ingredient)
+     (add-scooped ingredient amount)
 
-    :else
-    (do
-      (println "I do not have the ingredient" ingredient)
-      :error))))
+     :else
+     (do
+       (println "I do not have the ingredient" ingredient)
+       :error))))
 
 
 (defn load-up-amount [ingredient amount]
@@ -185,14 +184,15 @@
 
 (defn fetch-list [shopping-list]
   (doseq [[location ingredients] {:pantry pantry-ingredients
-                                :fridge fridge-ingredients}]
+                                  :fridge fridge-ingredients}]
     (go-to location)
-      (doseq [ingredient ingredients]
-        (load-up-amount ingredient (ingredient shopping-list 0))))
+    (doseq [ingredient ingredients]
+      (load-up-amount ingredient (ingredient shopping-list 0))))
 
-  (go-to :prep-area)
-  (doseq [[ingredient amount] shopping-list]
-    (unload-amount ingredient)))
+    (go-to :prep-area)
+    (doseq [[ingredient amount] shopping-list]
+      (unload-amount ingredient (ingredient shopping-list 0))))
+
 
 (defn bake-cake []
   (add :egg 2)
@@ -212,11 +212,14 @@
   (add :butter 1)
   (add :sugar 1))
 
+(def my-shopping-list {:flour 2 :milk 4 :butter 1})
+
 (defn -main []
- (start-over)
- (fetch-from-pantry :flour 2)
- (fetch-from-fridge :egg 15)
- (fetch-ingregient :sugar 2)
- (status))
+  (start-over)
+  ; (fetch-from-pantry :flour 2)
+  ; (fetch-from-fridge :egg 15)
+  ; (fetch-ingregient :sugar 2)
+  (fetch-list my-shopping-list)
+  (status))
 
 (-main)
