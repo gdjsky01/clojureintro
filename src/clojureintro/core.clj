@@ -228,7 +228,7 @@
                  :rackids [(bake-cookies)]}))))
 
 (defn -main []
-  (println get-morning-orders)
-   (day-at-the-bakery))
+  ;; (println (get-morning-orders))
+  (day-at-the-bakery))
 
 (-main)
