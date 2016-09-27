@@ -212,6 +212,13 @@
   (add :butter 1)
   (add :sugar 1))
 
+(defn  add-ingredients [shopping-list1 shopping-list2]
+  (merge-with + shopping-list1 shopping-list2))
+
+(defn multiply-ingredients [count ingredients]
+  (into {} (for [[ ingredient amount ] ingredients]
+    {ingredient (* count amount)})))
+
 
 (defn day-at-the-bakery []
   (doseq [order (get-morning-orders)]
@@ -229,6 +236,8 @@
 
 (defn -main []
   ;; (println (get-morning-orders))
-  (day-at-the-bakery))
+  ;; (day-at-the-bakery)
+  (multiply-ingredients 2 {:egg 2 :flour 3 :milk 1 :sugar 1})
+  )
 
 (-main)
