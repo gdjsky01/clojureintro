@@ -189,9 +189,9 @@
     (doseq [ingredient ingredients]
       (load-up-amount ingredient (ingredient shopping-list 0))))
 
-    (go-to :prep-area)
-    (doseq [[ingredient amount] shopping-list]
-      (unload-amount ingredient (ingredient shopping-list 0))))
+  (go-to :prep-area)
+  (doseq [[ingredient amount] shopping-list]
+    (unload-amount ingredient (ingredient shopping-list 0))))
 
 
 (defn bake-cake []
@@ -215,10 +215,15 @@
 (defn  add-ingredients [shopping-list1 shopping-list2]
   (merge-with + shopping-list1 shopping-list2))
 
-(defn multiply-ingredients [count ingredients]
+(defn multiply-ingredients [n-times ingredients]
   (into {} (for [[ ingredient amount ] ingredients]
-    {ingredient (* count amount)})))
+             {ingredient (* n-times amount)})))
 
+(defn order->ingregients [order]
+  (add-ingredients (multiply-ingredients (:cake (:items order) 0)
+                                         {:egg 2 :flour 3 :milk 1 :sugar 1})
+                   (multiply-ingredients (:cookies (:items order) 0)
+                                         {:egg 1 :flour 1 :butter 1 :sugar 1})))
 
 (defn day-at-the-bakery []
   (doseq [order (get-morning-orders)]
@@ -237,7 +242,9 @@
 (defn -main []
   ;; (println (get-morning-orders))
   ;; (day-at-the-bakery)
-  (multiply-ingredients 2 {:egg 2 :flour 3 :milk 1 :sugar 1})
+  (let [order (first (get-morning-orders))]
+    (order->ingregients order))
   )
 
 (-main)
+
