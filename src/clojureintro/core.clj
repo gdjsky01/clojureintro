@@ -225,6 +225,9 @@
                    (multiply-ingredients (:cookies (:items order) 0)
                                          {:egg 1 :flour 1 :butter 1 :sugar 1})))
 
+(defn orders->ingredients [orders]
+  (reduce add-ingredients (map order->ingregients orders)))
+
 (defn day-at-the-bakery []
   (doseq [order (get-morning-orders)]
     ;; get a map of items in the order and look up the cakes count
@@ -242,8 +245,7 @@
 (defn -main []
   ;; (println (get-morning-orders))
   ;; (day-at-the-bakery)
-  (let [order (first (get-morning-orders))]
-    (order->ingregients order))
+  (orders->ingredients (get-morning-orders))
   )
 
 (-main)
